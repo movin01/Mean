@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#my_form").submit(function (e) {
+                e.preventDefault();
+                var this_text = $("#this_text").val();
+                $.ajax({
+                    url: `https://pokeapi.co/api/v2/pokemon/${this_text}/`,
+                    method: 'get',
+                    success: function (serverResponse) {
+                        console.log(serverResponse)
+                        var pokeName = serverResponse.name
+                        var pokeHeight = serverResponse.height
+                        var pokeWeight = serverResponse.weight
+                        var sprite = serverResponse.sprites.front_default
+                        var sprite_2 = serverResponse.sprites.front_shiny
+                        console.log(sprite)
+                        $('h2').html("This is the name of your pok&eacute;: " + pokeName)
+                        $('h3').html("And " + pokeName + " is " + pokeHeight+" ' tall!!")
+                        $('h3').html ("Your " +pokeName + " weight is " + pokeWeight + "lbs!!")
+                        $('#img1').attr("src", sprite)
+                        $('#img1').hover.attr("src", sprite_2)
+                    }
+                })
+            })
+        })
+
+    </script>
+    </head>
+    <div id="container">
+        <h1>Hunting Pok&eacute; API</h1>
+        <form id="my_form">
+            <input type="text" name="pokemon" id="this_text">
+            <input type="submit" value="submit">
+        </form>
+        <br>
+
+        <h2></h2>
+        <h3></h3>
+        <img src="" alt="" id="img1" style="height: 150px; width: 150px;">
+        <img src="" alt="" id="img2" style="height: 150px; width: 150px;">
+    </div>
+</body>
+
+</html>
